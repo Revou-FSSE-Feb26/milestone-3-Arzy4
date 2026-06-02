@@ -39,10 +39,6 @@ export default function ProductCard({
           {category}
         </p>
 
-        <p className="mt-3 text-justify">
-          {description}
-        </p>
-
         <div className="flex justify-between">
 
           <p className="text-lg mt-2">
