@@ -13,8 +13,6 @@
 
 The website is thoughtfully **structured into multiple pages**, including a **Home Page** displaying product listings, **Promotion and FAQ** pages for additional information, a **Product Detail Page** presenting complete product descriptions and pricing, and a **Cart Page** where users can manage selected products. Each section is designed to create a seamless shopping experience while demonstrating the core functionality of a modern e-commerce platform.
 
-Built using modern web technologies, REVOSHOP focuses on responsive design, dynamic routing, reusable components, and smooth client-side navigation to ensure an efficient and interactive user experience. This project represents both a practical implementation of e-commerce fundamentals and a demonstration of modern frontend web development using Next.js and Tailwind CSS.
-
 ---
 
 ## KEY FEATURES
