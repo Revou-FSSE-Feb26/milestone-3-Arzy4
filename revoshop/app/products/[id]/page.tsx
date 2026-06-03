@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import { products } from "../../data/products";
-import Link from "next/link";
 import AddToCartButton from "../../components/addToCart";
 
 type ProductDetailProps = {

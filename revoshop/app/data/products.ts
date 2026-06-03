@@ -29,7 +29,7 @@ export const products = [
     name: "Wireless Headphones",
     price: 1200000,
     description:
-      "Designed to deliver exceptional comfort with a refined modern aesthetic, this premium sofa combines luxurious cushioning with an elegant contemporary silhouette that complements a wide range of interior styles. Upholstered with high-quality fabric and supported by a durable frame, the sofa provides a soft yet supportive seating experience ideal for relaxing, entertaining guests, or enhancing everyday living spaces. Its clean lines, spacious seating area, and sophisticated detailing create a balanced blend of style and functionality, making it a perfect centerpiece for modern homes, apartments, or stylish lounge areas.",
+      "Experience immersive audio quality and modern convenience with these premium wireless headphones, designed to deliver crystal-clear sound and exceptional comfort for everyday use. Featuring advanced noise-cancelling technology, the headphones help minimize surrounding distractions, allowing you to fully enjoy music, movies, gaming, or calls with enhanced clarity and deep balanced audio. The lightweight ergonomic design, soft cushioned ear cups, and adjustable headband provide long-lasting comfort during extended listening sessions, while the wireless connectivity ensures seamless movement without tangled cables. Combining sleek contemporary aesthetics with reliable performance and all-day battery life, these headphones are the perfect companion for work, travel, entertainment, and daily activities.",
   },
 
   {

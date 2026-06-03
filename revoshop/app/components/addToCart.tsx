@@ -15,31 +15,65 @@ export default function AddToCartButton({ product }: { product: Product }) {
   const [isInCart, setIsInCart] = useState(false);
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    const cart = storedCart ? JSON.parse(storedCart) : [];
+    try {
+      const storedCart = localStorage.getItem("cart");
 
-    const exists = cart.some((item: Product) => item.id === product.id);
-    setIsInCart(exists);
+      const cart: Product[] = storedCart
+        ? JSON.parse(storedCart)
+        : [];
+
+      const exists = cart.some(
+        (item: Product) => item.id === product.id
+      );
+
+      setIsInCart(exists);
+
+    } catch (error) {
+      console.error("Failed to parse cart data:", error);
+
+      localStorage.removeItem("cart");
+      setIsInCart(false);
+    }
   }, [product.id]);
 
   const handleCartButton = () => {
-    const storedCart = localStorage.getItem("cart");
-    const cart = storedCart ? JSON.parse(storedCart) : [];
+    try {
+      const storedCart = localStorage.getItem("cart");
 
-    if (isInCart) {
-      const updatedCart = cart.filter(
-        (item: Product) => item.id !== product.id
-      );
+      const cart: Product[] = storedCart
+        ? JSON.parse(storedCart)
+        : [];
 
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      if (isInCart) {
+        const updatedCart = cart.filter(
+          (item: Product) => item.id !== product.id
+        );
+
+        localStorage.setItem(
+          "cart",
+          JSON.stringify(updatedCart)
+        );
+
+        setIsInCart(false);
+
+      } else {
+        const updatedCart = [...cart, product];
+
+        localStorage.setItem(
+          "cart",
+          JSON.stringify(updatedCart)
+        );
+
+        setIsInCart(true);
+      }
+
+    } catch (error) {
+      console.error("Failed to update cart:", error);
+
+      localStorage.removeItem("cart");
       setIsInCart(false);
-    } else {
-      const updatedCart = [...cart, product];
-
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      setIsInCart(true);
     }
-  };
+};
 
   return (
     <button

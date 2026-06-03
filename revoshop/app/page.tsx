@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Navbar from "./components/navbar";
 import ProductCard from "./components/productCard";
 import { products } from "./data/products";
