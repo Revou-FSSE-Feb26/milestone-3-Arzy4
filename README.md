@@ -57,7 +57,7 @@ This website is deployed using Netlify by following these steps:
 1. Push the latest project changes to the GitHub repository.
 2. Sign in to the Netlify platform.
 3. Click the "Add new site" button and select "Import an existing project".
-4.Connect Netlify with the GitHub account and authorize repository access.
+4. Connect Netlify with the GitHub account and authorize repository access.
 5. Select the REVOSHOP project repository from the GitHub repository list.
 6. Configure the build settings:
     - Build Command: npm run build
