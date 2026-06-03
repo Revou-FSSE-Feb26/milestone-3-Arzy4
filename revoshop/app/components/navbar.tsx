@@ -3,12 +3,18 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between p-8">
-        <Image src="/revoShopLogo.png" alt="Logo" width={100} height={50} />
+    <nav className="flex justify-between items-center p-8">
+        <Image 
+        src="/revoShopLogo.png" 
+        alt="Logo" 
+        width={100} 
+        height={50}
+        />
         <div className="flex gap-6 text-white">
             <Link href="/">Home</Link>
             <Link href="/promotion">Promotion</Link>
             <Link href="/faq">FAQ</Link>
+            <Link href="/cart">Cart</Link>
         </div>
     </nav>
   );

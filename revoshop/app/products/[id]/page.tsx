@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import { products } from "../../data/products";
+import Link from "next/link";
+import AddToCartButton from "../../components/addToCart";
 
 type ProductDetailProps = {
   params: Promise<{
@@ -72,9 +74,9 @@ export default async function ProductDetail({
                     Rp {product.price.toLocaleString("id-ID")}
                 </p>
 
-                <button className="mt-8 bg-orange-500 hover:bg-orange-600 duration-300 px-6 py-3 rounded-xl font-bold">
-                    Add to Cart
-                </button>
+                <AddToCartButton 
+                product={product}
+                />
 
             </div>
 
