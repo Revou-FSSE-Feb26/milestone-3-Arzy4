@@ -20,9 +20,9 @@ export default function Promotion() {
   ];
 
   return (
-    <main className="min-h-screen bg-zinc-900 text-white px-8 py-16">
+    <main className="min-h-screen bg-zinc-900 text-white">
       <Navbar />
-      <section className="max-w-6xl mx-auto">
+      <section className="max-w-6xl mx-auto py-16">
         <div className="text-center mb-14">
           <p className="text-orange-500 font-semibold mb-3">
             Special Offers
