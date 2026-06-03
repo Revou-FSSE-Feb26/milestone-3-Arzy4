@@ -2,7 +2,7 @@
 
 --- 
 
-![View the Live Website](./public/screenshot/landingPage_ss.png)
+![View the Live Website](./revoshop/public/screenshot/landingPage.png)
 🔗 [View Live REVOSHOP SHOPPING PLATFORM](https://revoshop-123.netlify.app)
 
----
+--- 
