@@ -29,7 +29,7 @@ There are several types of features implemented in this platform, such as:
 
 ---
 
-# TOOLS AND TECHNOLOGIES
+## TOOLS AND TECHNOLOGIES
 
 The development of this shopping platform involved the **use of several tools and technologies to ensure a clean interface and smooth shopping experience**. Each component was carefully designed and implemented to create a modern and user-friendly e-commerce platform while demonstrating frontend development concepts and interactive web application features.
 
