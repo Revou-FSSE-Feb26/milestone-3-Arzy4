@@ -1,14 +1,12 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import AddToCartButton from "../../components/addToCart";
 
-type ProductDetailProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-type FakeStoreProduct = {
+type Product = {
   id: number;
   title: string;
   price: number;
@@ -17,34 +15,50 @@ type FakeStoreProduct = {
   image: string;
 };
 
-export default async function ProductDetail({
-  params,
-}: ProductDetailProps) {
-  const { id } = await params;
+export default function ProductDetail() {
+  const params = useParams();
+  const id = params.id;
 
-  const response = await fetch(
-    `https://fakestoreapi.com/products/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!response.ok) {
+  useEffect(() => {
+    fetch(`https://fakestoreapi.com/products/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch product");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Product Not Found");
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
     return (
       <main className="min-h-screen bg-zinc-800 text-white">
         <Navbar />
-
-        <h1 className="p-8 text-4xl font-bold">
-          Product Not Found
-        </h1>
-        <h2>
-          Status: {response.status}
-        </h2>
+        <h1 className="p-8 text-4xl font-bold text-center">Loading product...</h1>
       </main>
     );
   }
 
-  const product: FakeStoreProduct = await response.json();
+  if (error || !product) {
+    return (
+      <main className="min-h-screen bg-zinc-800 text-white">
+        <Navbar />
+        <h1 className="p-8 text-4xl font-bold">Product Not Found</h1>
+      </main>
+    );
+  }
 
   const cartProduct = {
     id: product.id,
@@ -57,29 +71,21 @@ export default async function ProductDetail({
 
   return (
     <main className="min-h-screen bg-zinc-800 text-white">
-
       <Navbar />
 
       <section className="p-8">
-
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-          {/* Product Image */}
-          <div className="bg-zinc-900 w-[500px] h-[500px] p-6 rounded-2xl">
-
+          <div className="bg-zinc-900 w-[500px] h-[500px] p-6 rounded-2xl flex items-center justify-center">
             <Image
               src={product.image}
               alt={product.title}
               width={500}
               height={500}
-              className="w-full h-full rounded-xl object-contain"
+              className="max-w-full max-h-full object-contain"
             />
-
           </div>
 
-          {/* Product Information */}
           <div>
-
             <p className="text-orange-400 font-semibold">
               {product.category}
             </p>
@@ -93,23 +99,15 @@ export default async function ProductDetail({
             </p>
 
             <div className="flex justify-between items-center">
+              <p className="text-2xl text-orange-400 font-bold mt-4">
+                ${product.price}
+              </p>
 
-                <p className="text-2xl text-orange-400 font-bold mt-4">
-                    ${product.price.toLocaleString("id-ID")}
-                </p>
-
-                <AddToCartButton 
-                product={cartProduct}
-                />
-
+              <AddToCartButton product={cartProduct} />
             </div>
-
           </div>
-
         </div>
-
       </section>
-
     </main>
   );
 }

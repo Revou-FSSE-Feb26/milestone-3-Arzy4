@@ -71,7 +71,7 @@ export default function CartPage() {
                     <td className="p-4 text-center w-[25%]">{item.category}</td>
 
                     <td className="p-4 text-center w-[25%]">
-                    Rp {item.price.toLocaleString("id-ID")}
+                    ${item.price}
                     </td>
 
                     <td className="p-4 text-center w-[25%]">
@@ -90,7 +90,7 @@ export default function CartPage() {
         <div className="flex justify-between">
 
           <h2 className="text-2xl font-bold mt-6">
-            Total: Rp {total.toLocaleString("id-ID")}
+            Total: ${total}
           </h2>
 
           {cart.length > 0 && (

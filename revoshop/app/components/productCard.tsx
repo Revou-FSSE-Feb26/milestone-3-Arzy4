@@ -14,7 +14,6 @@ export default function ProductCard({
   id,
   name,
   price,
-  description,
   category,
   image,
 }: ProductCardProps) {
@@ -35,7 +34,7 @@ export default function ProductCard({
     {/* Content */}
     <div className="flex flex-col flex-1 mt-4">
 
-      <h2 className="text-lg font-bold line-clamp-2 min-h-[56px]">
+      <h2 className="text-lg font-bold line-clamp-2 min-h-[56px] text-justify">
         {name}
       </h2>
 
@@ -45,7 +44,7 @@ export default function ProductCard({
 
       <div className="mt-auto flex justify-between items-center">
         <p className="text-lg font-semibold">
-          ${price.toLocaleString("id-ID")}
+          ${price}
         </p>
 
         <Link href={`/products/${id}`}>
