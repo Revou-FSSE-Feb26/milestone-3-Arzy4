@@ -37,6 +37,9 @@ export default async function ProductDetail({
         <h1 className="p-8 text-4xl font-bold">
           Product Not Found
         </h1>
+        <h2>
+          Status: {response.status}
+        </h2>
       </main>
     );
   }
