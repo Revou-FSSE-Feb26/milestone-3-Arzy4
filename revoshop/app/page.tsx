@@ -1,8 +1,65 @@
+"use client"
+
+import { useState, useEffect} from "react";
 import Navbar from "./components/navbar";
 import ProductCard from "./components/productCard";
 import { products } from "./data/products";
 
+type FakeStoreProduct = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+};
+
 export default function Home() {
+  const [products, setProducts] = useState<FakeStoreProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      return response.json();
+    })
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to fetch products");
+        setLoading(false);
+     });
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-zinc-800 text-white">
+        <Navbar />
+        <h1 className="p-8 text-4xl font-bold text-center">
+          Loading products...
+        </h1>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-zinc-800 text-white">
+        <Navbar />
+        <h1 className="p-8 text-4xl font-bold text-center">
+          {error}
+        </h1>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-zinc-800 text-white">
 
@@ -15,14 +72,14 @@ export default function Home() {
           RevoShop Products
         </h1>
 
-        <div className="grid grid-cols-3 justify-items-center gap-6 p-12">
+        <div className="grid grid-cols-4 justify-items-center gap-6 p-12">
 
           {products.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
               image={product.image}
-              name={product.name}
+              name={product.title}
               category={product.category}
               description={product.description}
               price={product.price}

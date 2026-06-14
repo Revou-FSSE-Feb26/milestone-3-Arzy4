@@ -19,42 +19,44 @@ export default function ProductCard({
   image,
 }: ProductCardProps) {
   return (
-    <div className="flex flex-col justify-center gap-6 border rounded-xl p-5 shadow-md hover:shadow-xl duration-300 bg-zinc-900 w-[400px] shrink-0 text-white">
+  <div className="flex flex-col justify-between border rounded-xl p-5 shadow-md hover:shadow-xl duration-300 bg-zinc-900 w-[300px] h-[400px] text-white">
 
-      <Image 
-      src={image} 
-      alt={name} 
-      width={400} 
-      height={300} 
-      className="rounded-lg" 
+    {/* Image Container */}
+    <div className="rounded-lg h-[220px] flex items-center justify-center overflow-hidden">
+      <Image
+        src={image}
+        alt={name}
+        width={200}
+        height={200}
+        className="object-contain h-full w-full p-4"
       />
+    </div>
 
-      <div>
+    {/* Content */}
+    <div className="flex flex-col flex-1 mt-4">
 
-        <h2 className="text-2xl font-bold">
-          {name}
-        </h2>
+      <h2 className="text-lg font-bold line-clamp-2 min-h-[56px]">
+        {name}
+      </h2>
 
-        <p className="text-sm mt-2">
-          {category}
+      <p className="text-sm text-zinc-400 mt-2">
+        {category}
+      </p>
+
+      <div className="mt-auto flex justify-between items-center">
+        <p className="text-lg font-semibold">
+          ${price.toLocaleString("id-ID")}
         </p>
 
-        <div className="flex justify-between">
-
-          <p className="text-lg mt-2">
-            Rp {price.toLocaleString("id-ID")}
-          </p>
-
-          <Link href={`/products/${id}`}>
-            <button className="bg-orange-500 hover:bg-orange-600 p-2 rounded-lg cursor-pointer">
-              View Details
-            </button>
-          </Link>
-
-        </div>
-
+        <Link href={`/products/${id}`}>
+          <button className="bg-orange-500 hover:bg-orange-600 px-3 py-2 rounded-lg cursor-pointer">
+            View Details
+          </button>
+        </Link>
       </div>
 
     </div>
-  );
+
+  </div>
+);
 }

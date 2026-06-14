@@ -9,16 +9,28 @@ type ProductDetailProps = {
   }>;
 };
 
+type FakeStoreProduct = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+};
+
 export default async function ProductDetail({
   params,
 }: ProductDetailProps) {
   const { id } = await params;
 
-  const product = products.find(
-    (item) => item.id === Number(id)
+  const response = await fetch(
+    `https://fakestoreapi.com/products/${id}`,
+    {
+      cache: "no-store",
+    }
   );
 
-  if (!product) {
+  if (!response.ok) {
     return (
       <main className="min-h-screen bg-zinc-800 text-white">
         <Navbar />
@@ -30,6 +42,17 @@ export default async function ProductDetail({
     );
   }
 
+  const product: FakeStoreProduct = await response.json();
+
+  const cartProduct = {
+    id: product.id,
+    name: product.title,
+    category: product.category,
+    price: product.price,
+    image: product.image,
+    description: product.description,
+  };
+
   return (
     <main className="min-h-screen bg-zinc-800 text-white">
 
@@ -40,14 +63,14 @@ export default async function ProductDetail({
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           {/* Product Image */}
-          <div className="bg-zinc-900 p-6 rounded-2xl">
+          <div className="bg-zinc-900 w-[500px] h-[500px] p-6 rounded-2xl">
 
             <Image
               src={product.image}
-              alt={product.name}
+              alt={product.title}
               width={500}
               height={500}
-              className="w-full rounded-xl object-cover"
+              className="w-full h-full rounded-xl object-contain"
             />
 
           </div>
@@ -60,7 +83,7 @@ export default async function ProductDetail({
             </p>
 
             <h1 className="text-4xl font-bold mt-2">
-              {product.name}
+              {product.title}
             </h1>
 
             <p className="text-zinc-300 text-justify leading-relaxed mt-6">
@@ -70,11 +93,11 @@ export default async function ProductDetail({
             <div className="flex justify-between items-center">
 
                 <p className="text-2xl text-orange-400 font-bold mt-4">
-                    Rp {product.price.toLocaleString("id-ID")}
+                    ${product.price.toLocaleString("id-ID")}
                 </p>
 
                 <AddToCartButton 
-                product={product}
+                product={cartProduct}
                 />
 
             </div>
