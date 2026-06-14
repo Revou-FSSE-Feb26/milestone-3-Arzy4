@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Navbar from "../../components/navbar";
-import { products } from "../../data/products";
 import AddToCartButton from "../../components/addToCart";
 
 type ProductDetailProps = {

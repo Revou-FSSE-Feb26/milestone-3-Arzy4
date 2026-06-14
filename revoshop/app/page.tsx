@@ -3,7 +3,6 @@
 import { useState, useEffect} from "react";
 import Navbar from "./components/navbar";
 import ProductCard from "./components/productCard";
-import { products } from "./data/products";
 
 type FakeStoreProduct = {
   id: number;
