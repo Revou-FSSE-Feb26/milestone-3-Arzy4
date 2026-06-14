@@ -71,7 +71,7 @@ export default function Home() {
           RevoShop Products
         </h1>
 
-        <div className="grid grid-cols-4 justify-items-center gap-6 p-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center gap-6 p-12">
 
           {products.map((product) => (
             <ProductCard

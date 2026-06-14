@@ -4,7 +4,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center p-8">
+    <nav className="flex flex-col md:flex-row justify-between items-center p-8 gap-5">
         <Image 
         src="/revoShopLogo.png" 
         alt="Logo" 

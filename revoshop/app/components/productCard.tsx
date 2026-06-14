@@ -18,7 +18,7 @@ export default function ProductCard({
   image,
 }: ProductCardProps) {
   return (
-  <div className="flex flex-col justify-between border rounded-xl p-5 shadow-md hover:shadow-xl duration-300 bg-zinc-900 w-[300px] h-[400px] text-white">
+  <div className="flex flex-col justify-between border rounded-xl p-5 shadow-md hover:shadow-xl duration-300 bg-zinc-900 w-[250px] h-[400px] text-white">
 
     {/* Image Container */}
     <div className="rounded-lg h-[220px] flex items-center justify-center overflow-hidden">
