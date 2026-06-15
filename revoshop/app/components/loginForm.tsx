@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +33,10 @@ export default function LoginForm() {
 
     if (foundUser) {
         document.cookie = "token=logged-in; path=/";
+        localStorage.setItem(
+        "currentUser",
+        JSON.stringify(foundUser)
+      );
         setShowPopup(true);
     } else {
         alert("Invalid email or password.");
@@ -39,7 +45,7 @@ export default function LoginForm() {
 
   function closePopup() {
     setShowPopup(false);
-    router.push("/");
+    router.push(redirectPath);
   }
 
   return (
