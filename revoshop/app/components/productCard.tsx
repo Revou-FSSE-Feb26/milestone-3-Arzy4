@@ -3,7 +3,7 @@ import Link from "next/link";
 
 type ProductCardProps = {
   id: number;
-  name: string;
+  title: string;
   price: number;
   description: string;
   category: string;
@@ -12,7 +12,7 @@ type ProductCardProps = {
 
 export default function ProductCard({
   id,
-  name,
+  title,
   price,
   category,
   image,
@@ -24,7 +24,7 @@ export default function ProductCard({
     <div className="rounded-lg h-[220px] flex items-center justify-center overflow-hidden">
       <Image
         src={image}
-        alt={name}
+        alt={title}
         width={200}
         height={200}
         className="object-contain h-full w-full p-4"
@@ -35,7 +35,7 @@ export default function ProductCard({
     <div className="flex flex-col flex-1 mt-4">
 
       <h2 className="text-lg font-bold line-clamp-2 min-h-[56px] text-justify">
-        {name}
+        {title}
       </h2>
 
       <p className="text-sm text-zinc-400 mt-2">

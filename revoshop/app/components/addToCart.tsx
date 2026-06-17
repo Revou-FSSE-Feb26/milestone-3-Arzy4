@@ -1,90 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-type Product = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  image: string;
-  description: string;
-};
+import { Product, useCart } from "../context/cartContext";
 
 export default function AddToCartButton({ product }: { product: Product }) {
-  const [isInCart, setIsInCart] = useState(false);
+  const { addToCart, removeFromCart, isInCart } = useCart();
 
-  useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-
-      const cart: Product[] = storedCart
-        ? JSON.parse(storedCart)
-        : [];
-
-      const exists = cart.some(
-        (item: Product) => item.id === product.id
-      );
-
-      setIsInCart(exists);
-
-    } catch (error) {
-      console.error("Failed to parse cart data:", error);
-
-      localStorage.removeItem("cart");
-      setIsInCart(false);
-    }
-  }, [product.id]);
+  const productInCart = isInCart(product.id);
 
   const handleCartButton = () => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-
-      const cart: Product[] = storedCart
-        ? JSON.parse(storedCart)
-        : [];
-
-      if (isInCart) {
-        const updatedCart = cart.filter(
-          (item: Product) => item.id !== product.id
-        );
-
-        localStorage.setItem(
-          "cart",
-          JSON.stringify(updatedCart)
-        );
-
-        setIsInCart(false);
-
-      } else {
-        const updatedCart = [...cart, product];
-
-        localStorage.setItem(
-          "cart",
-          JSON.stringify(updatedCart)
-        );
-
-        setIsInCart(true);
-      }
-
-    } catch (error) {
-      console.error("Failed to update cart:", error);
-
-      localStorage.removeItem("cart");
-      setIsInCart(false);
+    if (productInCart) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product);
     }
 };
 
   return (
     <button
       onClick={handleCartButton}
-      className={`mt-8 px-6 py-3 rounded-xl font-bold duration-300 ${
-        isInCart
-          ? "bg-red-500 hover:bg-red-600"
-          : "bg-orange-500 hover:bg-orange-600"
+      className={`mt-8 px-6 py-3 rounded-xl font-bold duration-300" ${
+        productInCart          
+        ? "bg-red-500 text-white hover:opacity-80"
+          : "bg-orange-500 text-white hover:opacity-80"
       }`}
     >
-      {isInCart ? "Remove from Cart" : "Add to Cart"}
+      {productInCart ? "Remove from Cart" : "Add to Cart"}
     </button>
   );
 }

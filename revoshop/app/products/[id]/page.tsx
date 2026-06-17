@@ -5,15 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import AddToCartButton from "../../components/addToCart";
-
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-};
+import { Product } from "../../context/cartContext";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -62,7 +54,7 @@ export default function ProductDetail() {
 
   const cartProduct = {
     id: product.id,
-    name: product.title,
+    title: product.title,
     category: product.category,
     price: product.price,
     image: product.image,

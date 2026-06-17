@@ -48,7 +48,7 @@ export default function Navbar() {
         height={50}
       />
 
-      <div className="flex flex-wrap justify-center gap-6 text-white">
+      <div className=" flex absolute left-1/2 -translate-x-1/2 gap-6 text-white">
         <Link
           href="/"
           className="flex items-center gap-2 hover:text-orange-500 transition"
@@ -76,38 +76,38 @@ export default function Navbar() {
         >
           <FaShoppingCart />
         </Link>
+      </div>
 
-        {currentUser ? (
-          <div className="relative">
-            <button
-              onClick={() =>
-                setShowDropDown(!showDropDown)
-              }
-              className="font-semibold text-orange-500 hover:text-orange-400 transition"
-            >
-              {currentUser.email} ▼
-            </button>
-
-            {showDropDown && (
-              <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-32 bg-white rounded-lg shadow-lg overflow-hidden z-50">
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-center px-4 py-2 text-red-500 hover:bg-red-50 transition"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <Link
-            href="/login"
-            className="hover:text-orange-500 transition"
+      {currentUser ? (
+        <div className="relative">
+          <button
+            onClick={() =>
+              setShowDropDown(!showDropDown)
+            }
+            className="font-semibold text-orange-500 hover:text-orange-400 transition"
           >
-            Login
-          </Link>
-        )}
+            {currentUser.email} ▼
+          </button>
+
+          {showDropDown && (
+            <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-32 bg-white rounded-lg shadow-lg overflow-hidden z-50">
+              <button
+                onClick={handleLogout}
+                className="w-full text-center px-4 py-2 text-red-500 hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
+      ) : (
+        <Link
+          href="/login"
+          className="hover:text-orange-500 transition"
+        >
+          Login
+        </Link>
+      )}
     </nav>
   );
 }

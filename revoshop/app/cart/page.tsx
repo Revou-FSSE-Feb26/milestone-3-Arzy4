@@ -1,48 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "../components/navbar";
-
-type Product = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  image: string;
-  description: string;
-};
+import { useCart } from "../context/cartContext";
 
 export default function CartPage() {
-  const [cart, setCart] = useState<Product[]>([]);
+  const { cart, removeFromCart, clearCart, totalPrice } = useCart();
+
   const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
-
-  useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-
-      setCart(storedCart ? JSON.parse(storedCart) : []);
-    } catch (error) {
-      console.error("Failed to parse cart data:", error);
-
-      localStorage.removeItem("cart");
-      setCart([]);
-    }
-  }, []);
-
-  const removeFromCart = (id: number) => {
-    const updatedCart = cart.filter((item) => item.id !== id);
-
-    setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
-
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   const handleCheckoutSuccess = () => {
       if (cart.length === 0) return;
-      localStorage.removeItem("cart");
-      setCart([]);
+      clearCart();
       setShowCheckoutSuccess(true);
     };
 
@@ -51,7 +21,7 @@ export default function CartPage() {
       <Navbar />
 
       <section className="p-8">
-        <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">Your Cart</h1>
 
         <table className="w-full border border-zinc-600 table-fixed">
             <thead className="bg-zinc-900">
@@ -66,7 +36,7 @@ export default function CartPage() {
             <tbody>
                 {cart.map((item) => (
                 <tr key={item.id} className="border-t border-zinc-600">
-                    <td className="p-4 text-center w-[25%]">{item.name}</td>
+                    <td className="p-4 text-center w-[25%]">{item.title}</td>
 
                     <td className="p-4 text-center w-[25%]">{item.category}</td>
 
@@ -90,7 +60,7 @@ export default function CartPage() {
         <div className="flex justify-between">
 
           <h2 className="text-2xl font-bold mt-6">
-            Total: ${total}
+            Total: ${totalPrice}
           </h2>
 
           {cart.length > 0 && (
