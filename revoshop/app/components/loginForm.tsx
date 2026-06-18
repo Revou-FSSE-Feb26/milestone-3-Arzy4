@@ -7,45 +7,55 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/";
+  const [nextPath, setNextPath] = useState("/");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const storedUser = localStorage.getItem("users");
+      try {
+      setLoading(true);
 
-    if (!storedUser) {
-      alert("User not found. Please register first.");
-      return;
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Invalid Email or Password");
+        return;
+      }
+
+      if (data.email === "robbyarzy@gmail.com") {
+        setNextPath("/admin/products");
+      } else {
+        setNextPath(redirectPath);
+      }
+
+      setShowPopup(true);
+
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Something went wrong. Please check your API route.");
+    } finally {
+      setLoading(false);
     }
-
-    const users = JSON.parse(storedUser);
-
-    const foundUser = users.find(
-    (user: { email: string; password: string }) =>
-      user.email === email &&
-      user.password === password
-    );
-
-    if (foundUser) {
-        document.cookie = "token=logged-in; path=/";
-        localStorage.setItem(
-        "currentUser",
-        JSON.stringify(foundUser)
-      );
-        setShowPopup(true);
-    } else {
-        alert("Invalid email or password.");
-    }
-    }
+  }
 
   function closePopup() {
     setShowPopup(false);
-    router.push(redirectPath);
+    router.push(nextPath);
+    router.refresh();
   }
 
   return (
@@ -77,9 +87,10 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded-lg hover:opacity-80 duration-300"
+          disabled={loading}
+          className="w-full bg-black text-white py-2 rounded-lg hover:opacity-80 duration-300 disabled:opacity-50"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 

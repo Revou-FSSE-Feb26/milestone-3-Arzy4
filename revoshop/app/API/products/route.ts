@@ -1,5 +1,24 @@
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  try {
+    const response = await fetch("https://api.escuelajs.co/api/v1/products", {
+      cache: "no-store",
+    });
+
+    const products = await response.json();
+
+    return NextResponse.json(products);
+  } catch (error) {
+    console.error("GET products error:", error);
+
+    return NextResponse.json(
+      { message: "Failed to fetch products" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -13,7 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch("https://fakestoreapi.com/products", {
+    const response = await fetch("https://api.escuelajs.co/api/v1/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,8 +41,8 @@ export async function POST(request: Request) {
         title,
         price: Number(price),
         description,
-        image,
-        category,
+        categoryId: Number(category),
+        images: [image],
       }),
     });
 

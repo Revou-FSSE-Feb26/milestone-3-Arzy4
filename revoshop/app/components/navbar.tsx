@@ -6,37 +6,44 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
 
-type CurrentUser = {
-  name: string;
-  email: string;
-};
-
 export default function Navbar() {
   const router = useRouter();
 
   const [showDropDown, setShowDropDown] = useState(false);
 
-  const [currentUser, setCurrentUser] =
-    useState<CurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<{
+    email: string;
+    name?: string;
+  } | null>(null);
 
   useEffect(() => {
-    const storedUser =
-      localStorage.getItem("currentUser");
+    async function fetchCurrentUser() {
+    const response = await fetch("/api/auth/profile", {
+      credentials: "include",
+    });
 
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
+    if (!response.ok) {
+      setCurrentUser(null);
+      return;
     }
+
+    const data = await response.json();
+    setCurrentUser(data);
+  }
+
+  fetchCurrentUser();
   }, []);
 
-  function handleLogout() {
-    document.cookie =
-      "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-
-    localStorage.removeItem("currentUser");
+  async function handleLogout() {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
 
     setCurrentUser(null);
+    setShowDropDown(false);
 
     router.push("/login");
+    router.refresh();
   }
 
   return (
@@ -91,6 +98,14 @@ export default function Navbar() {
 
           {showDropDown && (
             <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-32 bg-white rounded-lg shadow-lg overflow-hidden z-50">
+              {currentUser.email === "robbyarzy@gmail.com" && (
+              <Link
+                href="/admin/products"
+                className="block w-full text-center px-4 py-2 text-blue-500 hover:bg-blue-50 transition"
+              >
+                Admin
+              </Link>
+            )}
               <button
                 onClick={handleLogout}
                 className="w-full text-center px-4 py-2 text-red-500 hover:bg-red-50 transition"

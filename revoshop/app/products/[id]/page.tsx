@@ -5,18 +5,30 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import AddToCartButton from "../../components/addToCart";
-import { Product } from "../../context/cartContext";
+
+type PlatziProduct = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  images: string[];
+  category: {
+    id: number;
+    name: string;
+    image: string;
+  };
+};
 
 export default function ProductDetail() {
   const params = useParams();
   const id = params.id;
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<PlatziProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`https://api.escuelajs.co/api/v1/products/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch product");
@@ -38,7 +50,9 @@ export default function ProductDetail() {
     return (
       <main className="min-h-screen bg-zinc-800 text-white">
         <Navbar />
-        <h1 className="p-8 text-4xl font-bold text-center">Loading product...</h1>
+        <h1 className="p-8 text-4xl font-bold text-center">
+          Loading product...
+        </h1>
       </main>
     );
   }
@@ -52,12 +66,17 @@ export default function ProductDetail() {
     );
   }
 
+  const productImage =
+    product.images?.[0]?.startsWith("https://")
+      ? product.images[0]
+      : "/placeholder.png";
+
   const cartProduct = {
     id: product.id,
     title: product.title,
-    category: product.category,
+    category: product.category.name,
     price: product.price,
-    image: product.image,
+    image: productImage,
     description: product.description,
   };
 
@@ -69,7 +88,7 @@ export default function ProductDetail() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="bg-zinc-900 w-[500px] h-[500px] p-6 rounded-2xl flex items-center justify-center">
             <Image
-              src={product.image}
+              src={productImage}
               alt={product.title}
               width={500}
               height={500}
@@ -79,12 +98,10 @@ export default function ProductDetail() {
 
           <div>
             <p className="text-orange-400 font-semibold">
-              {product.category}
+              {product.category.name}
             </p>
 
-            <h1 className="text-4xl font-bold mt-2">
-              {product.title}
-            </h1>
+            <h1 className="text-4xl font-bold mt-2">{product.title}</h1>
 
             <p className="text-zinc-300 text-justify leading-relaxed mt-6">
               {product.description}

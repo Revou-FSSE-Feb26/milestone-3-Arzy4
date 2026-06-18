@@ -4,22 +4,26 @@ import { useState, useEffect} from "react";
 import Navbar from "./components/navbar";
 import ProductCard from "./components/productCard";
 
-type FakeStoreProduct = {
+type platziProduct = {
   id: number;
   title: string;
   price: number;
   description: string;
-  category: string;
-  image: string;
+  images: string[];
+  category: {
+    id: number;
+    name: string;
+    image: string;
+  };
 };
 
 export default function Home() {
-  const [products, setProducts] = useState<FakeStoreProduct[]>([]);
+  const [products, setProducts] = useState<platziProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("https://api.escuelajs.co/api/v1/products")
       .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch products");
@@ -73,17 +77,24 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center gap-6 p-12">
 
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              category={product.category}
-              description={product.description}
-              price={product.price}
-            />
-          ))}
+          {products.map((product) => {
+            const productImage =
+              product.images?.[0]?.startsWith("https://")
+                ? product.images[0]
+                : "/placeholder.png";
+
+            return (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                image={productImage}
+                title={product.title}
+                category={product.category.name}
+                description={product.description}
+                price={product.price}
+              />
+            );
+          })}
 
         </div>
 

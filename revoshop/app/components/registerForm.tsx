@@ -11,33 +11,36 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
 
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleRegister(e: React.FormEvent<HTMLFormElement>) {
+  async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const user = {
-      name,
-      email,
-      password,
-    };
+    try {
+      setLoading(true);
 
-    const storedUsers = localStorage.getItem("users")
-    const users = storedUsers ? JSON.parse(storedUsers) : [];
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    const emailAlreadyExists = users.some(
-        (user: { email: string }) => user.email === email
-    );
+      const data = await response.json();
 
-    if (emailAlreadyExists) {
-        alert("Email already registered.");
+      if (!response.ok) {
+        alert(data.message || "Register Failed");
         return;
+      }
+
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Register error:", error);
+      alert("Something went wrong. Please check your API route.");
+    } finally {
+      setLoading(false);
     }
-
-    users.push(user);
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    setShowPopup(true);
   }
 
   function closePopup() {
@@ -86,9 +89,10 @@ export default function RegisterForm() {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-black text-white py-2 rounded-lg hover:opacity-80 duration-300"
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
 
