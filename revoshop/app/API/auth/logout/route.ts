@@ -6,7 +6,7 @@ export async function POST() {
   });
 
   response.cookies.set("token", "", {
-    path: "/login",
+    path: "/",
     expires: new Date(0),
   });
 
