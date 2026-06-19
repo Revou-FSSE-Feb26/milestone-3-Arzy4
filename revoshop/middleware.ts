@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-    const token = request.cookies.get("token")?.value;
-    const path = request.nextUrl.pathname;
+  const token = request.cookies.get("token");
 
-    if (path.startsWith("/cart") && !token) {
-        const loginUrl = new URL("/login", request.url);
-        loginUrl.searchParams.set("redirect", path);
+  if (!token) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
 
-        return NextResponse.redirect(loginUrl);
-    }
+    return NextResponse.redirect(loginUrl);
+  }
 
-    return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/cart/:path*"],
+  matcher: ["/cart", "/admin/:path*"],
 };

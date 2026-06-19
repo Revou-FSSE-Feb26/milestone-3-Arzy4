@@ -198,8 +198,7 @@ export default function Products() {
   async function handleConfirmDelete() {
     if (!deletingProduct) return;
 
-    const response = await fetch(
-      `https://api.escuelajs.co/api/v1/products/${deletingProduct.id}`,
+    const response = await fetch(`/api/products/${deletingProduct.id}`,
       {
         method: "DELETE",
       }

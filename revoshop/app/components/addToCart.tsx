@@ -3,9 +3,9 @@
 import { Product, useCart } from "../context/cartContext";
 
 export default function AddToCartButton({ product }: { product: Product }) {
-  const { addToCart, removeFromCart, isInCart } = useCart();
+  const { addToCart, removeFromCart, getCartItemQuantity } = useCart();
 
-  const productInCart = isInCart(product.id);
+  const productInCart = getCartItemQuantity(product.id);
 
   const handleCartButton = () => {
     if (productInCart) {
