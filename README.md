@@ -3,7 +3,7 @@
 --- 
 
 ![View the Live Website](./revoshop/public/screenshot/landingPage.png)
-🔗 [View Live REVOSHOP SHOPPING PLATFORM](https://revoshop-123.netlify.app)
+🔗 [View Live REVOSHOP SHOPPING PLATFORM](https://revoshop123.vercel.app)
 
 --- 
 
@@ -52,27 +52,29 @@ The development of this shopping platform involved the **use of several tools an
 
 ### Deployment
 
-This website is deployed using Netlify by following these steps:
+This website is deployed using Vercel by following these steps:
 
 1. Push the latest project changes to the GitHub repository.
-2. Sign in to the Netlify platform.
-3. Click the "Add new site" button and select "Import an existing project".
-4. Connect Netlify with the GitHub account and authorize repository access.
-5. Select the REVOSHOP project repository from the GitHub repository list.
-6. Configure the build settings:
-    - Build Command: npm run build
-    - Publish Directory: .next
-7. Click the "Deploy Site" button to start the deployment process.
-8. Wait until the deployment is completed successfully.
-9. Netlify will automatically generate a live deployment URL that can be accessed publicly.
+2. Sign in to the Vercel platform.
+3. Click the "Add New..." button and select "Project".
+4. Import the GitHub repository and authorize Vercel to access the GitHub account if prompted.
+5. Select the REVOSHOP repository from the list of available GitHub repositories.
+6. Configure the project settings:
+    - Framework Preset: Next.js
+    - Root Directory: revoshop (if the Next.js project is inside the revoshop folder)
+    - Build Command: npm run build (default)
+    - Install Command: npm install (default)
+7. Click the "Deploy" button to start the deployment process.
+8. Wait until the build and deployment process completes successfully.
+9. Vercel will automatically generate a live deployment URL that can be accessed publicly.
 
-After a few minutes, Netlify will automatically build, publish the website, and the live URL will be generated and displayed
+After a few minutes, Vercel will automatically build, deploy the application, and provide a live URL for accessing the website.
 
 ### Live Website
 
 REVOSHOP Shopping Platform is now live and can be accessed through the link below:
 
-`https://revoshop-123.netlify.app`
+`https://revoshop123.vercel.app`
 
 Once opened, users can navigate through the main sections of the website:
 
