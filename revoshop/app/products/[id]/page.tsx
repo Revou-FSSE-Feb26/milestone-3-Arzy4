@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../components/navbar";
 import AddToCartButton from "../../components/addToCart";
+import { Product } from "../../context/cartContext"
 
 type PlatziProduct = {
   id: number;
@@ -71,15 +72,6 @@ export default function ProductDetail() {
       ? product.images[0]
       : "/placeholder.png";
 
-  const cartProduct = {
-    id: product.id,
-    title: product.title,
-    category: product.category.name,
-    price: product.price,
-    image: productImage,
-    description: product.description,
-  };
-
   return (
     <main className="min-h-screen bg-zinc-800 text-white">
       <Navbar />
@@ -112,7 +104,7 @@ export default function ProductDetail() {
                 ${product.price}
               </p>
 
-              <AddToCartButton product={cartProduct} />
+              <AddToCartButton product={product} />
             </div>
           </div>
         </div>

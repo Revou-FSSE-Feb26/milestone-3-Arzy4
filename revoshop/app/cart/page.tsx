@@ -38,7 +38,7 @@ export default function CartPage() {
                 <tr key={item.id} className="border-t border-zinc-600">
                     <td className="p-4 text-center w-[25%]">{item.title}</td>
 
-                    <td className="p-4 text-center w-[25%]">{item.category}</td>
+                    <td className="p-4 text-center w-[25%]">{item.category?.name || "No category"}</td>
 
                     <td className="p-4 text-center w-[25%]">
                     ${item.price}
